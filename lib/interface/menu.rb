@@ -19,7 +19,11 @@ class GosuGameJamArcade
         )
 
         flow(width: 1.0, height: 1.0, margin: FRAME_PADDING, padding: FRAME_THICKNESS) do
-          button "Pet Peeve", enabled: false
+          button "Pet Peeve" do
+            GosuGameJamArcade::Window.current_game = PetPeeve::GameWindow.new
+            GosuGameJamArcade::Window.current_game.current_window = GosuGameJamArcade::Window.instance
+          end
+
           button "Boxes !", enabled: false
           button "Relax", enabled: false
           button "Butterfly Surfer", enabled: false
@@ -28,6 +32,7 @@ class GosuGameJamArcade
             Omega.run(ChaosPenguinGame::Game, "#{ChaosPenguinGame::GAME_ROOT_PATH}/config.json")
 
             GosuGameJamArcade::Window.current_game = Omega.window
+            GosuGameJamArcade::Window.current_game.current_window = GosuGameJamArcade::Window.instance
           end
 
           button "Scheduler" do

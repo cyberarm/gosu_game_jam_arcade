@@ -18,6 +18,7 @@ require_relative "lib/interface/window"
 require_relative "lib/interface/menu"
 
 # LOAD GAMES
+require_relative "lib/games/pet-peeve/src/main"
 require_relative "lib/games/chaos_penguin/main"
 require_relative "lib/games/ggj_scheduler/scheduler"
 
