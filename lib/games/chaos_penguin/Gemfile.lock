@@ -1,0 +1,16 @@
+GEM
+  specs:
+    gosu (1.2.0)
+    json (2.6.1)
+    opengl-bindings (1.6.11)
+
+PLATFORMS
+  x86_64-linux
+
+DEPENDENCIES
+  gosu
+  json
+  opengl-bindings
+
+BUNDLED WITH
+   2.2.22
