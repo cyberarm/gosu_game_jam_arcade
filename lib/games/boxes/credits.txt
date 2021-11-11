@@ -1,0 +1,20 @@
+"Boxes !" is a small game made by Guillaume Quillet, aka "Bestguigui", for the first Gosu Game Jam.
+
+It was made using the ruby programing language and the gem gosu only.
+
+You have to sort the boxes falling from the top right corner using three sorting areas. 
+
+Boxes are placed on the conveyer that you can control the speed of. Clicking on an ejection spot will eject the first box to the sorting area.
+
+You can use the 1-2-3 keys to control speed and Q-W-E to eject boxes instead of the mouse if you want to.
+
+When your first box is placed inside an area, the color is chosen. Placing the same color for the entire area will give extra points.
+
+If a box leaves the screen, you get malus points. And if your dropping boxes reach 20 boxes, it's game over.
+
+Have Fun !
+
+Credits :
+sounds of Beetlemuse, JonnyRuss01, zivs, unadamlar, Mudkip2016 and Kastenfrosch from https://freesound.org
+
+music from syncopika of https://opengameart.org
