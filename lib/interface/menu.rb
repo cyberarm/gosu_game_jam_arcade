@@ -18,13 +18,17 @@ class GosuGameJamArcade
           10
         )
 
+        flow(width: 1.0, height: 1.0, margin: FRAME_THICKNESS + FRAME_PADDING) do
+          banner "<b>Gosu Arcade</b>", width: 1.0, text_align: :center, text_size: 144, text_border: false, text_shadow: true, text_shadow_size: 1, text_shadow_color: 0xff_000000
+        end
+
         @cards = [
           GosuGameJamArcade::Interface::Card.new(
             title: "Pet Peeve",
             description: "The pet must finish making a mess before time runs out!",
             authors: "AUTHOR and AUTHOR",
-            banner: "chaos_penguin.png",
-            color_hint: 0x44_ff8800
+            banner: "pet_peeve.png",
+            color_hint: 0x88_800000
           ) do
             GosuGameJamArcade::Window.current_game = PetPeeve::GameWindow.new
             GosuGameJamArcade::Window.current_game.current_window = GosuGameJamArcade::Window.instance
@@ -34,8 +38,8 @@ class GosuGameJamArcade
             title: "Boxes !",
             description: "The pet must finish making a mess before time runs out!",
             authors: "AUTHOR and AUTHOR",
-            banner: "chaos_penguin.png",
-            color_hint: 0x44_ff8800
+            banner: "boxes.png",
+            color_hint: 0x88_884422
           ) do
             GosuGameJamArcade::Window.current_game = BoxesGame::Window.new
             GosuGameJamArcade::Window.current_game.current_window = GosuGameJamArcade::Window.instance
@@ -45,8 +49,8 @@ class GosuGameJamArcade
             title: "Relax",
             description: "The pet must finish making a mess before time runs out!",
             authors: "AUTHOR and AUTHOR",
-            banner: "chaos_penguin.png",
-            color_hint: 0x44_ff8800
+            banner: "relax.png",
+            color_hint: 0x88_ff8800
           ) do
             GosuGameJamArcade::Window.current_game = RelaxGame::Game.new
             GosuGameJamArcade::Window.current_game.current_window = GosuGameJamArcade::Window.instance
@@ -56,8 +60,8 @@ class GosuGameJamArcade
             title: "Butterfly Surfer",
             description: "The pet must finish making a mess before time runs out!",
             authors: "AUTHOR and AUTHOR",
-            banner: "chaos_penguin.png",
-            color_hint: 0x44_ff8800
+            banner: "butterfly_surfer.png",
+            color_hint: 0x88_000000
           ) do
             GosuGameJamArcade::Window.current_game = ButterflySurferGame::ButterflySurfer.new
             GosuGameJamArcade::Window.current_game.current_window = GosuGameJamArcade::Window.instance
@@ -68,7 +72,7 @@ class GosuGameJamArcade
             description: "The pet must finish making a mess before time runs out!",
             authors: "AUTHOR and AUTHOR",
             banner: "chaos_penguin.png",
-            color_hint: 0x44_ff8800
+            color_hint: 0x88_000080
           ) do
             Omega.run(ChaosPenguinGame::Game, "#{ChaosPenguinGame::GAME_ROOT_PATH}/config.json")
 
@@ -80,8 +84,8 @@ class GosuGameJamArcade
             title: "Scheduler",
             description: "The pet must finish making a mess before time runs out!",
             authors: "AUTHOR and AUTHOR",
-            banner: "chaos_penguin.png",
-            color_hint: 0x44_ff8800
+            banner: "scheduler.png",
+            color_hint: 0x88_255025
           ) do
             GosuGameJamArcade::Window.current_game = SchedulerGame::Window.new(width: window.width, height: window.height)
             GosuGameJamArcade::Window.current_game.current_window = GosuGameJamArcade::Window.instance
@@ -91,8 +95,8 @@ class GosuGameJamArcade
             title: "Keep Calm & Balance",
             description: "The pet must finish making a mess before time runs out!",
             authors: "AUTHOR and AUTHOR",
-            banner: "chaos_penguin.png",
-            color_hint: 0x44_ff8800
+            banner: "keep_calm_and_balance.png",
+            color_hint: 0x88_404080
           ) do
             GosuGameJamArcade::Window.current_game = KeepCalmAndBalanceGame::GameWindow.new(KeepCalmAndBalanceGame::VERSION)
             GosuGameJamArcade::Window.current_game.current_window = GosuGameJamArcade::Window.instance
@@ -102,7 +106,7 @@ class GosuGameJamArcade
             title: "Ruby Brickland",
             description: "The pet must finish making a mess before time runs out!",
             authors: "AUTHOR and AUTHOR",
-            banner: "chaos_penguin.png",
+            banner: "ruby_brickland.png",
             color_hint: 0x44_ff8800
           ) do
             GosuGameJamArcade::Window.current_game = BricksGameGame::BricksGame.new
@@ -134,16 +138,19 @@ class GosuGameJamArcade
         fill(0x44_222222) # Dim background image a tad
         fill(card.color_hint) # Color Hint
 
-        Gosu.translate(-prev_card.width / 2, window.height / 2 - prev_card.height / 2) do
-          prev_card.draw
-        end
+        Gosu.clip_to(FRAME_PADDING + FRAME_THICKNESS, FRAME_PADDING + FRAME_THICKNESS,
+                     window.width - ((FRAME_PADDING + FRAME_THICKNESS) * 2), window.height - ((FRAME_PADDING + FRAME_THICKNESS) * 2)) do
+          Gosu.translate(-prev_card.width / 2, window.height / 2 - prev_card.height / 2) do
+            prev_card.draw
+          end
 
-        Gosu.translate(window.width / 2 - card.width / 2, window.height / 2 - card.height / 2) do
-          card.draw
-        end
+          Gosu.translate(window.width / 2 - card.width / 2, window.height / 2 - card.height / 2) do
+            card.draw
+          end
 
-        Gosu.translate(window.width - next_card.width / 2, window.height / 2 - next_card.height / 2) do
-          next_card.draw
+          Gosu.translate(window.width - next_card.width / 2, window.height / 2 - next_card.height / 2) do
+            next_card.draw
+          end
         end
 
         Gosu.draw_rect(
@@ -177,6 +184,7 @@ class GosuGameJamArcade
           @gosu_game_jam_logo_scale,
           @gosu_game_jam_logo_scale
         )
+
         super
       end
 
