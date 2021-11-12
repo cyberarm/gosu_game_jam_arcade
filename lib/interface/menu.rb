@@ -18,49 +18,99 @@ class GosuGameJamArcade
           10
         )
 
-        flow(width: 1.0, height: 1.0, margin: FRAME_PADDING, padding: FRAME_THICKNESS) do
-          button "Pet Peeve" do
+        @cards = [
+          GosuGameJamArcade::Interface::Card.new(
+            title: "Pet Peeve",
+            description: "The pet must finish making a mess before time runs out!",
+            authors: "AUTHOR and AUTHOR",
+            banner: "chaos_penguin.png",
+            color_hint: 0x44_ff8800
+          ) do
             GosuGameJamArcade::Window.current_game = PetPeeve::GameWindow.new
             GosuGameJamArcade::Window.current_game.current_window = GosuGameJamArcade::Window.instance
-          end
+          end,
 
-          button "Boxes !" do
+          GosuGameJamArcade::Interface::Card.new(
+            title: "Boxes !",
+            description: "The pet must finish making a mess before time runs out!",
+            authors: "AUTHOR and AUTHOR",
+            banner: "chaos_penguin.png",
+            color_hint: 0x44_ff8800
+          ) do
             GosuGameJamArcade::Window.current_game = BoxesGame::Window.new
             GosuGameJamArcade::Window.current_game.current_window = GosuGameJamArcade::Window.instance
-          end
+          end,
 
-          button "Relax" do
+          GosuGameJamArcade::Interface::Card.new(
+            title: "Relax",
+            description: "The pet must finish making a mess before time runs out!",
+            authors: "AUTHOR and AUTHOR",
+            banner: "chaos_penguin.png",
+            color_hint: 0x44_ff8800
+          ) do
             GosuGameJamArcade::Window.current_game = RelaxGame::Game.new
             GosuGameJamArcade::Window.current_game.current_window = GosuGameJamArcade::Window.instance
-          end
+          end,
 
-          button "Butterfly Surfer" do
+          GosuGameJamArcade::Interface::Card.new(
+            title: "Butterfly Surfer",
+            description: "The pet must finish making a mess before time runs out!",
+            authors: "AUTHOR and AUTHOR",
+            banner: "chaos_penguin.png",
+            color_hint: 0x44_ff8800
+          ) do
             GosuGameJamArcade::Window.current_game = ButterflySurferGame::ButterflySurfer.new
             GosuGameJamArcade::Window.current_game.current_window = GosuGameJamArcade::Window.instance
-          end
+          end,
 
-          button "Chaos Penguin" do
+          GosuGameJamArcade::Interface::Card.new(
+            title: "Chaos Penguin",
+            description: "The pet must finish making a mess before time runs out!",
+            authors: "AUTHOR and AUTHOR",
+            banner: "chaos_penguin.png",
+            color_hint: 0x44_ff8800
+          ) do
             Omega.run(ChaosPenguinGame::Game, "#{ChaosPenguinGame::GAME_ROOT_PATH}/config.json")
 
             GosuGameJamArcade::Window.current_game = Omega.window
             GosuGameJamArcade::Window.current_game.current_window = GosuGameJamArcade::Window.instance
-          end
+          end,
 
-          button "Scheduler" do
+          GosuGameJamArcade::Interface::Card.new(
+            title: "Scheduler",
+            description: "The pet must finish making a mess before time runs out!",
+            authors: "AUTHOR and AUTHOR",
+            banner: "chaos_penguin.png",
+            color_hint: 0x44_ff8800
+          ) do
             GosuGameJamArcade::Window.current_game = SchedulerGame::Window.new(width: window.width, height: window.height)
             GosuGameJamArcade::Window.current_game.current_window = GosuGameJamArcade::Window.instance
-          end
+          end,
 
-          button "Keep Calm & Balance" do
+          GosuGameJamArcade::Interface::Card.new(
+            title: "Keep Calm & Balance",
+            description: "The pet must finish making a mess before time runs out!",
+            authors: "AUTHOR and AUTHOR",
+            banner: "chaos_penguin.png",
+            color_hint: 0x44_ff8800
+          ) do
             GosuGameJamArcade::Window.current_game = KeepCalmAndBalanceGame::GameWindow.new(KeepCalmAndBalanceGame::VERSION)
             GosuGameJamArcade::Window.current_game.current_window = GosuGameJamArcade::Window.instance
-          end
+          end,
 
-          button "Ruby Brickland" do
+          GosuGameJamArcade::Interface::Card.new(
+            title: "Ruby Brickland",
+            description: "The pet must finish making a mess before time runs out!",
+            authors: "AUTHOR and AUTHOR",
+            banner: "chaos_penguin.png",
+            color_hint: 0x44_ff8800
+          ) do
             GosuGameJamArcade::Window.current_game = BricksGameGame::BricksGame.new
             GosuGameJamArcade::Window.current_game.current_window = GosuGameJamArcade::Window.instance
           end
-        end
+        ]
+
+        @card_index = 0
       end
 
       def draw
@@ -77,7 +127,24 @@ class GosuGameJamArcade
           bg_scale
         )
 
-        fill(0x44_222222)
+        prev_card = @cards[(@card_index - 1) % @cards.size]
+        card = @cards[@card_index]
+        next_card = @cards[(@card_index + 1) % @cards.size]
+
+        fill(0x44_222222) # Dim background image a tad
+        fill(card.color_hint) # Color Hint
+
+        Gosu.translate(-prev_card.width / 2, window.height / 2 - prev_card.height / 2) do
+          prev_card.draw
+        end
+
+        Gosu.translate(window.width / 2 - card.width / 2, window.height / 2 - card.height / 2) do
+          card.draw
+        end
+
+        Gosu.translate(window.width - next_card.width / 2, window.height / 2 - next_card.height / 2) do
+          next_card.draw
+        end
 
         Gosu.draw_rect(
           FRAME_PADDING, FRAME_PADDING,
@@ -111,6 +178,23 @@ class GosuGameJamArcade
           @gosu_game_jam_logo_scale
         )
         super
+      end
+
+      def button_down(id)
+        super
+
+        case id
+        when Gosu::KB_LEFT, Gosu::KB_A
+          @card_index -= 1
+        when Gosu::KB_RIGHT, Gosu::KB_D
+          @card_index += 1
+        when Gosu::KB_ENTER, Gosu::KB_RETURN, Gosu::KB_SPACE
+          # launch game
+          @cards[@card_index].block.call
+        end
+
+        @card_index = @cards.size - 1 if @card_index < 0
+        @card_index = 0 if @card_index > @cards.size - 1
       end
     end
   end

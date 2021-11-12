@@ -16,6 +16,7 @@ require "cyberarm_engine"
 require_relative "lib/window"
 require_relative "lib/interface/window"
 require_relative "lib/interface/menu"
+require_relative "lib/interface/card"
 
 # LOAD GAMES
 require_relative "lib/games/pet-peeve/src/main"
