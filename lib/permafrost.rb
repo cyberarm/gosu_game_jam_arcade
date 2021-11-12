@@ -8,6 +8,8 @@ module Gosu
     def initialize(width, height, *options)
       @width = width
       @height = height
+
+      self
     end
 
     def draw

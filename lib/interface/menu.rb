@@ -29,7 +29,11 @@ class GosuGameJamArcade
             GosuGameJamArcade::Window.current_game.current_window = GosuGameJamArcade::Window.instance
           end
 
-          button "Relax", enabled: false
+          button "Relax" do
+            GosuGameJamArcade::Window.current_game = RelaxGame::Game.new
+            GosuGameJamArcade::Window.current_game.current_window = GosuGameJamArcade::Window.instance
+          end
+
           button "Butterfly Surfer", enabled: false
 
           button "ChaosPenguin" do

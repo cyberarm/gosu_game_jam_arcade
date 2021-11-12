@@ -531,7 +531,7 @@ class BoxesGame
 
     def button_down(id)
       super
-      close! if id == Gosu::KB_ESCAPE
+      close if id == Gosu::KB_ESCAPE
       @game.button_down(id)
     end
 
