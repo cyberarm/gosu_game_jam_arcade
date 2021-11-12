@@ -64,7 +64,18 @@ class GosuGameJamArcade
       end
 
       def draw
-        @background_image.draw(0, 0, 0)
+        bg_scale = [
+          @background_image.width / window.width.to_f,
+          @background_image.width / window.height.to_f
+        ].min
+
+        @background_image.draw(
+          0,
+          0,
+          0,
+          bg_scale,
+          bg_scale
+        )
 
         fill(0x44_222222)
 

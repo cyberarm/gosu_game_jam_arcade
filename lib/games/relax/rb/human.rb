@@ -25,16 +25,6 @@ class RelaxGame
       @particles = nil
     end
 
-    def update
-      super
-
-      go_left if Gosu.button_down?(Gosu::KB_LEFT) || Gosu.button_down?(Gosu::KB_A)
-      go_right if Gosu.button_down?(Gosu::KB_RIGHT) || Gosu.button_down?(Gosu::KB_D)
-      go_up if Gosu.button_down?(Gosu::KB_UP) || Gosu.button_down?(Gosu::KB_W)
-      go_down if Gosu.button_down?(Gosu::KB_DOWN) || Gosu.button_down?(Gosu::KB_S)
-      drop_toys if Gosu.button_down?(Gosu::KB_SPACE) || Gosu.button_down?(Gosu::KB_ENTER)
-    end
-
     def assign_particles(particles)
       @particles = particles
     end
