@@ -14,6 +14,7 @@ class GosuGameJamArcade
 
     def initialize
       super(Gosu.screen_width, Gosu.screen_height, fullscreen: true)
+      # super(1280, 720, fullscreen: true) # Test to fit @bestguigui's display
 
       @@current_game = GosuGameJamArcade::Interface.new(width: width, height: height)
       @@current_game.current_window = self

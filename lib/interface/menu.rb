@@ -14,6 +14,10 @@ class GosuGameJamArcade
 
         @gosu_game_jam_logo_scale = 0.25
 
+        @window_scale = [window.width / 1920.0, window.height / 1080.0].min
+
+        @gosu_game_jam_logo_scale *= @window_scale
+
         @gosu_game_jam_logo_position = CyberarmEngine::Vector.new(
           window.width - (@gosu_game_jam_logo.width * @gosu_game_jam_logo_scale) / 2 - (FRAME_PADDING + FRAME_THICKNESS * 2),
           (FRAME_PADDING + FRAME_THICKNESS * 2) + (@gosu_game_jam_logo.height * @gosu_game_jam_logo_scale) / 2,
@@ -21,7 +25,7 @@ class GosuGameJamArcade
         )
 
         flow(width: 1.0, height: 1.0, margin: FRAME_THICKNESS + FRAME_PADDING) do
-          banner "<b>Arcade</b>", width: 1.0, text_align: :center, text_size: 128, text_border: false, text_shadow: true, text_shadow_size: 1, text_shadow_color: 0xff_000000
+          banner "<b>Arcade</b>", width: 1.0, text_align: :center, text_size: (128 * @window_scale).round, text_border: false, text_shadow: true, text_shadow_size: 1, text_shadow_color: 0xff_000000
         end
 
         @cards = [
@@ -143,15 +147,21 @@ class GosuGameJamArcade
         Gosu.clip_to(FRAME_PADDING + FRAME_THICKNESS, FRAME_PADDING + FRAME_THICKNESS,
                      window.width - ((FRAME_PADDING + FRAME_THICKNESS) * 2), window.height - ((FRAME_PADDING + FRAME_THICKNESS) * 2)) do
           Gosu.translate(-prev_card.width / 2, window.height / 2 - fixed_height) do
-            prev_card.draw
+            Gosu.scale(@window_scale, @window_scale, prev_card.width / 2, window.height / 2) do
+              prev_card.draw
+            end
           end
 
           Gosu.translate(window.width / 2 - card.width / 2, window.height / 2 - fixed_height) do
-            card.draw
+            Gosu.scale(@window_scale, @window_scale, window.width / 2 - card.width / 2, window.height / 2) do
+              card.draw
+            end
           end
 
           Gosu.translate(window.width - next_card.width / 2, window.height / 2 - fixed_height) do
-            next_card.draw
+            Gosu.scale(@window_scale, @window_scale, 0, window.height / 2) do
+              next_card.draw
+            end
           end
         end
 
