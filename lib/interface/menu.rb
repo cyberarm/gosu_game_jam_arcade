@@ -4,8 +4,10 @@ class GosuGameJamArcade
       FRAME_PADDING = 32
       FRAME_THICKNESS = 4
 
+      @@card_index = 0
+
       def setup
-        window.show_cursor = true
+        window.show_cursor = false
 
         @background_image = get_image("#{GosuGameJamArcade::GAME_ROOT_PATH}/media/background.png")
         @gosu_game_jam_logo = get_image("#{GosuGameJamArcade::GAME_ROOT_PATH}/media/gosu_game_jam_logo_large.png")
@@ -19,14 +21,14 @@ class GosuGameJamArcade
         )
 
         flow(width: 1.0, height: 1.0, margin: FRAME_THICKNESS + FRAME_PADDING) do
-          banner "<b>Gosu Arcade</b>", width: 1.0, text_align: :center, text_size: 144, text_border: false, text_shadow: true, text_shadow_size: 1, text_shadow_color: 0xff_000000
+          banner "<b>Arcade</b>", width: 1.0, text_align: :center, text_size: 128, text_border: false, text_shadow: true, text_shadow_size: 1, text_shadow_color: 0xff_000000
         end
 
         @cards = [
           GosuGameJamArcade::Interface::Card.new(
             title: "Pet Peeve",
-            description: "The pet must finish making a mess before time runs out!",
-            authors: "AUTHOR and AUTHOR",
+            description: "You are an adorable kitten and you've just moved into your new home - how exciting! Wouldn't it be a shame if you went on a mug-breaking, shelf-clearing spree of destruction...?",
+            authors: "Aaron Christiansen (@OrangeFlash81)",
             banner: "pet_peeve.png",
             color_hint: 0x88_800000
           ) do
@@ -36,8 +38,8 @@ class GosuGameJamArcade
 
           GosuGameJamArcade::Interface::Card.new(
             title: "Boxes !",
-            description: "The pet must finish making a mess before time runs out!",
-            authors: "AUTHOR and AUTHOR",
+            description: "You have to sort the boxes falling from the top right corner using three sorting areas.",
+            authors: "Guillaume Quillet (@bestguigui)",
             banner: "boxes.png",
             color_hint: 0x88_884422
           ) do
@@ -47,8 +49,8 @@ class GosuGameJamArcade
 
           GosuGameJamArcade::Interface::Card.new(
             title: "Relax",
-            description: "The pet must finish making a mess before time runs out!",
-            authors: "AUTHOR and AUTHOR",
+            description: "This game puts you in an ordinary living room on an ordinary day — just relax, and try to keep things tidy in there if you can please!",
+            authors: "eagleDog and triquad",
             banner: "relax.png",
             color_hint: 0x88_ff8800
           ) do
@@ -58,8 +60,8 @@ class GosuGameJamArcade
 
           GosuGameJamArcade::Interface::Card.new(
             title: "Butterfly Surfer",
-            description: "The pet must finish making a mess before time runs out!",
-            authors: "AUTHOR and AUTHOR",
+            description: "Earn points by staying alive. Maximize points per second by gliding as close as possible to the bodies. BUT BEWARE! Your microscopic mass, although negligible, will have an exponentially increasing impact on their fragile equilibrium as you grow nearer. Disturb the natural order at your own risk.",
+            authors: "heymitchfischer",
             banner: "butterfly_surfer.png",
             color_hint: 0x88_000000
           ) do
@@ -69,8 +71,8 @@ class GosuGameJamArcade
 
           GosuGameJamArcade::Interface::Card.new(
             title: "Chaos Penguin",
-            description: "The pet must finish making a mess before time runs out!",
-            authors: "AUTHOR and AUTHOR",
+            description: "Welcome into Chaos Penguin!\n\nIn this entry for the Inaugural Gosu Jam, you will take the role of (obviously) the \"Chaos Penguin\"! It's up to you to destroy, ruin, and establish chaos in the peaceful kingdom of Penguinland.\n\nWill you succeed in this chaotic task?",
+            authors: "HydroGene & D3nX",
             banner: "chaos_penguin.png",
             color_hint: 0x88_000080
           ) do
@@ -82,8 +84,8 @@ class GosuGameJamArcade
 
           GosuGameJamArcade::Interface::Card.new(
             title: "Scheduler",
-            description: "The pet must finish making a mess before time runs out!",
-            authors: "AUTHOR and AUTHOR",
+            description: "Weave all the Travellers to their zones before time runs out",
+            authors: "Cyberarm",
             banner: "scheduler.png",
             color_hint: 0x88_255025
           ) do
@@ -93,8 +95,8 @@ class GosuGameJamArcade
 
           GosuGameJamArcade::Interface::Card.new(
             title: "Keep Calm & Balance",
-            description: "The pet must finish making a mess before time runs out!",
-            authors: "AUTHOR and AUTHOR",
+            description: "Your goal is to keep balancing the barrel on the seesaw for as long as possible. Game ends when the centre of barrel leaves the window area.",
+            authors: "rasunadon",
             banner: "keep_calm_and_balance.png",
             color_hint: 0x88_404080
           ) do
@@ -104,8 +106,8 @@ class GosuGameJamArcade
 
           GosuGameJamArcade::Interface::Card.new(
             title: "Ruby Brickland",
-            description: "The pet must finish making a mess before time runs out!",
-            authors: "AUTHOR and AUTHOR",
+            description: "There is chaos in Ruby Brickland, and you need to get your ball to the green field out of the castle before it is engulfed in flames. Clear as many bricks and collect as many dots as you can along the way before exiting into the green area at the top. Don't take too long because the fire level will be rising.",
+            authors: "dbroemme",
             banner: "ruby_brickland.png",
             color_hint: 0x44_ff8800
           ) do
@@ -113,8 +115,6 @@ class GosuGameJamArcade
             GosuGameJamArcade::Window.current_game.current_window = GosuGameJamArcade::Window.instance
           end
         ]
-
-        @card_index = 0
       end
 
       def draw
@@ -131,24 +131,26 @@ class GosuGameJamArcade
           bg_scale
         )
 
-        prev_card = @cards[(@card_index - 1) % @cards.size]
-        card = @cards[@card_index]
-        next_card = @cards[(@card_index + 1) % @cards.size]
+        prev_card = @cards[(@@card_index - 1) % @cards.size]
+        card = @cards[@@card_index]
+        next_card = @cards[(@@card_index + 1) % @cards.size]
+
+        fixed_height = 630.0 / 2
 
         fill(0x44_222222) # Dim background image a tad
         fill(card.color_hint) # Color Hint
 
         Gosu.clip_to(FRAME_PADDING + FRAME_THICKNESS, FRAME_PADDING + FRAME_THICKNESS,
                      window.width - ((FRAME_PADDING + FRAME_THICKNESS) * 2), window.height - ((FRAME_PADDING + FRAME_THICKNESS) * 2)) do
-          Gosu.translate(-prev_card.width / 2, window.height / 2 - prev_card.height / 2) do
+          Gosu.translate(-prev_card.width / 2, window.height / 2 - fixed_height) do
             prev_card.draw
           end
 
-          Gosu.translate(window.width / 2 - card.width / 2, window.height / 2 - card.height / 2) do
+          Gosu.translate(window.width / 2 - card.width / 2, window.height / 2 - fixed_height) do
             card.draw
           end
 
-          Gosu.translate(window.width - next_card.width / 2, window.height / 2 - next_card.height / 2) do
+          Gosu.translate(window.width - next_card.width / 2, window.height / 2 - fixed_height) do
             next_card.draw
           end
         end
@@ -193,16 +195,16 @@ class GosuGameJamArcade
 
         case id
         when Gosu::KB_LEFT, Gosu::KB_A
-          @card_index -= 1
+          @@card_index -= 1
         when Gosu::KB_RIGHT, Gosu::KB_D
-          @card_index += 1
+          @@card_index += 1
         when Gosu::KB_ENTER, Gosu::KB_RETURN, Gosu::KB_SPACE
           # launch game
-          @cards[@card_index].block.call
+          @cards[@@card_index].block.call
         end
 
-        @card_index = @cards.size - 1 if @card_index < 0
-        @card_index = 0 if @card_index > @cards.size - 1
+        @@card_index = @cards.size - 1 if @@card_index < 0
+        @@card_index = 0 if @@card_index > @cards.size - 1
       end
     end
   end
