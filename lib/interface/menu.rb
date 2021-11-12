@@ -34,9 +34,12 @@ class GosuGameJamArcade
             GosuGameJamArcade::Window.current_game.current_window = GosuGameJamArcade::Window.instance
           end
 
-          button "Butterfly Surfer", enabled: false
+          button "Butterfly Surfer" do
+            GosuGameJamArcade::Window.current_game = ButterflySurferGame::ButterflySurfer.new
+            GosuGameJamArcade::Window.current_game.current_window = GosuGameJamArcade::Window.instance
+          end
 
-          button "ChaosPenguin" do
+          button "Chaos Penguin" do
             Omega.run(ChaosPenguinGame::Game, "#{ChaosPenguinGame::GAME_ROOT_PATH}/config.json")
 
             GosuGameJamArcade::Window.current_game = Omega.window

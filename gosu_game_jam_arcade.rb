@@ -21,6 +21,7 @@ require_relative "lib/interface/menu"
 require_relative "lib/games/pet-peeve/src/main"
 require_relative "lib/games/boxes/init"
 require_relative "lib/games/relax/start_game"
+require_relative "lib/games/butterfly-surfer/main"
 require_relative "lib/games/chaos_penguin/main"
 require_relative "lib/games/ggj_scheduler/scheduler"
 

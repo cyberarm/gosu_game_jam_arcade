@@ -39,6 +39,7 @@ module Gosu
     end
 
     def button_down?(id)
+      Gosu.button_down?(id)
     end
 
     def close
@@ -70,6 +71,18 @@ module Gosu
 
     def text_input=(text_input)
       @current_window&.text_input = text_input
+    end
+
+    def update_interval
+      @current_window&.update_interval
+    end
+
+    def draw_quad(*args)
+      @current_window&.draw_quad(*args)
+    end
+
+    def draw_line(*args)
+      @current_window&.draw_line(*args)
     end
   end
 end
