@@ -56,7 +56,10 @@ class GosuGameJamArcade
             GosuGameJamArcade::Window.current_game.current_window = GosuGameJamArcade::Window.instance
           end
 
-          button "Ruby Brickland", enabled: false
+          button "Ruby Brickland" do
+            GosuGameJamArcade::Window.current_game = BricksGameGame::BricksGame.new
+            GosuGameJamArcade::Window.current_game.current_window = GosuGameJamArcade::Window.instance
+          end
         end
       end
 

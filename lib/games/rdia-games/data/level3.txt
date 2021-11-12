@@ -1,0 +1,6 @@
+{
+  :player_x => 400,
+  :player_y => 627,
+  :ball_x   => 755,
+  :ball_y   => 560
+}
