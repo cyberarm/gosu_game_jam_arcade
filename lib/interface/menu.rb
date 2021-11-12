@@ -9,6 +9,12 @@ class GosuGameJamArcade
       def setup
         window.show_cursor = false
 
+        @select_sound = get_sample("#{GosuGameJamArcade::GAME_ROOT_PATH}/media/sfx/confirmation_002.ogg")
+        @switch_sound = get_sample("#{GosuGameJamArcade::GAME_ROOT_PATH}/media/sfx/toggle_002.ogg")
+        @music = get_song("#{GosuGameJamArcade::GAME_ROOT_PATH}/media/music/battleThemeB.mp3")
+        @music.volume = 0.25
+        @music.play(true)
+
         @background_image = get_image("#{GosuGameJamArcade::GAME_ROOT_PATH}/media/background.png")
         @gosu_game_jam_logo = get_image("#{GosuGameJamArcade::GAME_ROOT_PATH}/media/gosu_game_jam_logo_large.png")
 
@@ -24,8 +30,9 @@ class GosuGameJamArcade
           10
         )
 
-        flow(width: 1.0, height: 1.0, margin: FRAME_THICKNESS + FRAME_PADDING) do
+        stack(width: 1.0, height: 1.0, margin: FRAME_THICKNESS + FRAME_PADDING) do
           banner "<b>Arcade</b>", width: 1.0, text_align: :center, text_size: (128 * @window_scale).round, text_border: false, text_shadow: true, text_shadow_size: 1, text_shadow_color: 0xff_000000
+          # label "Use ←, →, A, or D to navigate and Enter or Space to select", width: 1.0, text_align: :center, text_size: (24 * @window_scale).round, text_border: false, text_shadow: true, text_shadow_size: 1, text_shadow_color: 0xff_000000
         end
 
         @cards = [
@@ -206,10 +213,14 @@ class GosuGameJamArcade
         case id
         when Gosu::KB_LEFT, Gosu::KB_A
           @@card_index -= 1
+          @switch_sound.play
         when Gosu::KB_RIGHT, Gosu::KB_D
           @@card_index += 1
+          @switch_sound.play
         when Gosu::KB_ENTER, Gosu::KB_RETURN, Gosu::KB_SPACE
           # launch game
+          @select_sound.play
+          @music.stop
           @cards[@@card_index].block.call
         end
 

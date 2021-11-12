@@ -31,7 +31,7 @@ module Gosu
     end
 
     def needs_cursor?
-      true
+      false
     end
 
     def needs_redraw?
