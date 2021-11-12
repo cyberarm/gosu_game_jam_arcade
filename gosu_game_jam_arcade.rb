@@ -24,5 +24,6 @@ require_relative "lib/games/relax/start_game"
 require_relative "lib/games/butterfly-surfer/main"
 require_relative "lib/games/chaos_penguin/main"
 require_relative "lib/games/ggj_scheduler/scheduler"
+require_relative "lib/games/keep-calm-and-balance/keep_calm_and_balance"
 
 GosuGameJamArcade::Window.new.show

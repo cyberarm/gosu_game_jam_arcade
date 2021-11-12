@@ -51,7 +51,11 @@ class GosuGameJamArcade
             GosuGameJamArcade::Window.current_game.current_window = GosuGameJamArcade::Window.instance
           end
 
-          button "Keep Calm & Balance", enabled: false
+          button "Keep Calm & Balance" do
+            GosuGameJamArcade::Window.current_game = KeepCalmAndBalanceGame::GameWindow.new(KeepCalmAndBalanceGame::VERSION)
+            GosuGameJamArcade::Window.current_game.current_window = GosuGameJamArcade::Window.instance
+          end
+
           button "Ruby Brickland", enabled: false
         end
       end
